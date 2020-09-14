@@ -23,7 +23,7 @@ namespace PermissionRequestApp.Entities.Models
         public DateTime Date { get; set; }
 
         [ForeignKey(nameof(PermissionTypeId))]
-        [InverseProperty("Permission")]
+        //[InverseProperty("Permission")]
         public virtual PermissionType PermissionType { get; set; }
     }
 }

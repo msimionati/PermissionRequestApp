@@ -13,8 +13,5 @@ namespace PermissionRequestApp.Entities.Models
         [Required]
         [StringLength(50)]
         public string Description { get; set; }
-
-        [InverseProperty("PermissionType")]
-        public virtual ICollection<Permission> Permission { get; set; }
     }
 }

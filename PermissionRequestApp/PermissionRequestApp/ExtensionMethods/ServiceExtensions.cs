@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LoggerService;
+using Microsoft.Extensions.DependencyInjection;
 using PermissionRequestApp.Contracts;
 using PermissionRequestApp.Repository;
 
@@ -9,6 +10,11 @@ namespace PermissionRequestApp.ExtensionMethods
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+        }
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
 
         public static void CordsConfiguration(this IServiceCollection services)

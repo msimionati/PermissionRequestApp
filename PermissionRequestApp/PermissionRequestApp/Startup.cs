@@ -1,11 +1,15 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
 using PermissionRequestApp.Entities;
 using PermissionRequestApp.ExtensionMethods;
+using System;
+using System.IO;
 using VueCliMiddleware;
 
 namespace PermissionRequestApp
@@ -14,6 +18,7 @@ namespace PermissionRequestApp
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -25,7 +30,10 @@ namespace PermissionRequestApp
             services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"], b => b.MigrationsAssembly("PermissionRequestApp")));
             services.ConfigureRepositoryWrapper();
             services.CordsConfiguration();
-            services.AddControllers();
+            services.ConfigureLoggerService();
+            services.AddAutoMapper(typeof(Startup));
+            //services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp";

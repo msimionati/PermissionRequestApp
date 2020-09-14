@@ -16,6 +16,7 @@ namespace PermissionRequestApp.Repository
         public async Task<IEnumerable<Permission>> GetAllAsync()
         {
             return await FindAll()
+                .Include(p=>p.PermissionType)
                 .ToListAsync();
         }
         public async Task<Permission> GetByIdAsync(int permissionId)
