@@ -31,11 +31,13 @@ namespace PermissionRequestApp.Migrations
 
                     b.Property<string>("EmployeeFirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("EmployeeLastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("PermissionTypeId")
                         .HasColumnType("int");
@@ -49,16 +51,17 @@ namespace PermissionRequestApp.Migrations
 
             modelBuilder.Entity("PermissionRequestApp.Entities.Models.PermissionType", b =>
                 {
-                    b.Property<int>("PermitTypeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
-                    b.HasKey("PermitTypeId");
+                    b.HasKey("Id");
 
                     b.ToTable("PermissionType");
                 });

@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PermissionRequestApp.Entities;
 using PermissionRequestApp.ExtensionMethods;
 using VueCliMiddleware;
@@ -30,6 +24,7 @@ namespace PermissionRequestApp
         {
             services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"], b => b.MigrationsAssembly("PermissionRequestApp")));
             services.ConfigureRepositoryWrapper();
+            services.CordsConfiguration();
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
             {

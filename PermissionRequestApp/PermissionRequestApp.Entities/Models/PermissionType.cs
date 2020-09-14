@@ -8,9 +8,10 @@ namespace PermissionRequestApp.Entities.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PermitTypeId { get; set; }
+        public int Id { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string Description { get; set; }
 
         [InverseProperty("PermissionType")]

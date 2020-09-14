@@ -11,13 +11,13 @@ namespace PermissionRequestApp.Migrations
                 name: "PermissionType",
                 columns: table => new
                 {
-                    PermitTypeId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionType", x => x.PermitTypeId);
+                    table.PrimaryKey("PK_PermissionType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -27,8 +27,8 @@ namespace PermissionRequestApp.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PermissionTypeId = table.Column<int>(nullable: false),
-                    EmployeeFirstName = table.Column<string>(nullable: false),
-                    EmployeeLastName = table.Column<string>(nullable: false),
+                    EmployeeFirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    EmployeeLastName = table.Column<string>(maxLength: 50, nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -38,7 +38,7 @@ namespace PermissionRequestApp.Migrations
                         name: "FK_Permission_PermissionType_PermissionTypeId",
                         column: x => x.PermissionTypeId,
                         principalTable: "PermissionType",
-                        principalColumn: "PermitTypeId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

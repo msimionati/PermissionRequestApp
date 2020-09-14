@@ -1,5 +1,6 @@
 ﻿using PermissionRequestApp.Contracts;
 using PermissionRequestApp.Entities;
+using System.Threading.Tasks;
 
 namespace PermissionRequestApp.Repository
 {
@@ -38,9 +39,9 @@ namespace PermissionRequestApp.Repository
             }
         }
 
-        public void SaveAsync()
+        public async Task SaveAsync()
         {
-            _repoContext.SaveChangesAsync();
+            await _repoContext.SaveChangesAsync();
         }
     }
 }

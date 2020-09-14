@@ -13,8 +13,10 @@ namespace PermissionRequestApp.Entities.Models
         public int PermissionTypeId { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string EmployeeFirstName { get; set; }
         [Required]
+        [StringLength(50)]
         public string EmployeeLastName { get; set; }
 
         [Required]

@@ -1,9 +1,11 @@
-﻿namespace PermissionRequestApp.Contracts
+﻿using System.Threading.Tasks;
+
+namespace PermissionRequestApp.Contracts
 {
     public interface IRepositoryWrapper
     {
         IPermissionRepository Permission { get; }
         IPermissionTypeRepository PermissionType { get; }
-        void SaveAsync();
+        Task SaveAsync();
     }
 }
