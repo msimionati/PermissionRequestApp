@@ -12,13 +12,13 @@ namespace PermissionTypeRequestApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PermissionTypeTypeController : ControllerBase
+    public class PermissionTypeController : ControllerBase
     {
         private ILoggerManager _logger;
         private IRepositoryWrapper _repository;
         private IMapper _mapper;
 
-        public PermissionTypeTypeController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper)
+        public PermissionTypeController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
@@ -30,9 +30,9 @@ namespace PermissionTypeRequestApp.Controllers
         {
             try
             {
-                var permissions = await _repository.PermissionType.GetAllAsync();
-                _logger.LogInfo($"Returned all permissions from database.");
-                var permissionsResult = _mapper.Map<IEnumerable<PermissionTypeDto>>(permissions);
+                var permissionTypes = await _repository.PermissionType.GetAllAsync();
+                _logger.LogInfo($"Returned all permissions types from database.");
+                var permissionsResult = _mapper.Map<IEnumerable<PermissionTypeDto>>(permissionTypes);
                 return Ok(permissionsResult);
             }
             catch (Exception ex)
@@ -47,8 +47,8 @@ namespace PermissionTypeRequestApp.Controllers
         {
             try
             {
-                var permission = await _repository.PermissionType.GetByIdAsync(id);
-                if (permission == null)
+                var permissionType = await _repository.PermissionType.GetByIdAsync(id);
+                if (permissionType == null)
                 {
                     _logger.LogError($"PermissionType with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -56,7 +56,7 @@ namespace PermissionTypeRequestApp.Controllers
                 else
                 {
                     _logger.LogInfo($"Returned permission with id: {id}");
-                    var permissionResult = _mapper.Map<PermissionTypeDto>(permission);
+                    var permissionResult = _mapper.Map<PermissionTypeDto>(permissionType);
                     return Ok(permissionResult);
                 }
             }
@@ -68,24 +68,24 @@ namespace PermissionTypeRequestApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePermissionType([FromBody] PermissionTypeAddDto permission)
+        public async Task<IActionResult> CreatePermissionType([FromBody] PermissionTypeAddDto permissionType)
         {
             try
             {
-                if (permission == null)
+                if (permissionType == null)
                 {
                     _logger.LogError("PermissionType object sent from client is null.");
                     return BadRequest("PermissionType object is null");
                 }
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogError("Invalid permission object sent from client.");
+                    _logger.LogError("Invalid permission type object sent from client.");
                     return BadRequest("Invalid model object");
                 }
-                var permissionEntity = _mapper.Map<PermissionType>(permission);
-                _repository.PermissionType.Create(permissionEntity);
+                var permissionTypeEntity = _mapper.Map<PermissionType>(permissionType);
+                _repository.PermissionType.Create(permissionTypeEntity);
                 await _repository.SaveAsync();
-                var createdPermissionType = _mapper.Map<PermissionTypeDto>(permissionEntity);
+                var createdPermissionType = _mapper.Map<PermissionTypeDto>(permissionTypeEntity);
                 return CreatedAtRoute("PermissionTypeById", new { id = createdPermissionType.Id }, createdPermissionType);
             }
             catch (Exception ex)
@@ -96,11 +96,11 @@ namespace PermissionTypeRequestApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePermissionType(int id, [FromBody] PermissionTypeUpdateDto permission)
+        public async Task<IActionResult> UpdatePermissionType(int id, [FromBody] PermissionTypeUpdateDto permissionType)
         {
             try
             {
-                if (permission == null)
+                if (permissionType == null)
                 {
                     _logger.LogError("PermissionType object sent from client is null.");
                     return BadRequest("PermissionType object is null");
@@ -110,14 +110,14 @@ namespace PermissionTypeRequestApp.Controllers
                     _logger.LogError("Invalid permission object sent from client.");
                     return BadRequest("Invalid model object");
                 }
-                var permissionEntity = await _repository.PermissionType.GetByIdAsync(id);
-                if (permissionEntity == null)
+                var permissionTypeEntity = await _repository.PermissionType.GetByIdAsync(id);
+                if (permissionTypeEntity == null)
                 {
                     _logger.LogError($"PermissionType with id: {id}, hasn't been found in db.");
                     return NotFound();
                 }
-                _mapper.Map(permission, permissionEntity);
-                _repository.PermissionType.Update(permissionEntity);
+                _mapper.Map(permissionType, permissionTypeEntity);
+                _repository.PermissionType.Update(permissionTypeEntity);
                 await _repository.SaveAsync();
                 return NoContent();
             }
@@ -133,13 +133,13 @@ namespace PermissionTypeRequestApp.Controllers
         {
             try
             {
-                var permission = await _repository.PermissionType.GetByIdAsync(id);
-                if (permission == null)
+                var permissionType = await _repository.PermissionType.GetByIdAsync(id);
+                if (permissionType == null)
                 {
                     _logger.LogError($"PermissionType with id: {id}, hasn't been found in db.");
                     return NotFound();
                 }
-                _repository.PermissionType.Delete(permission);
+                _repository.PermissionType.Delete(permissionType);
                 await _repository.SaveAsync();
                 return NoContent();
             }

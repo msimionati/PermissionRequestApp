@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PermissionRequestApp.Contracts.RequestDTO;
 using PermissionRequestApp.Contracts.ResponseDTO;
 using PermissionRequestApp.Entities.Models;
 using System;
@@ -12,8 +13,16 @@ namespace PermissionRequestApp
     {
         public MappingProfile()
         {
+            //DOMAIN TO RESPONSE
             CreateMap<Permission, PermissionDto>();
             CreateMap<PermissionType, PermissionTypeDto>();
+
+            //REQUEST TO DOMAIN
+            CreateMap<PermissionAddDto, Permission>();
+            CreateMap<PermissionUpdateDto, Permission>();
+            CreateMap<PermissionTypeDto, PermissionType>();
+            CreateMap<PermissionTypeAddDto, PermissionType>();
+            CreateMap<PermissionTypeUpdateDto, PermissionType>();
         }
     }
 }

@@ -21,9 +21,5 @@
     <ProjectReference Include="..\PermissionRequestApp.Repository\PermissionRequestApp.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="clientapp\src\router\" />
-  </ItemGroup>
-
 
 </Project>
